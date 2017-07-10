@@ -56,7 +56,7 @@ var Pportfolio = {
 
         create: function() {
 
-            var $addItem = $('.pl-meta-gallery .add-items');
+            var $edit_button = $('.pl-button-edit-gallery');
 
             var frame = wp.media({
                 displaySettings: false,
@@ -71,7 +71,7 @@ var Pportfolio = {
                 selection: Pportfolio.gallery.select()
             });
 
-            $addItem.on('click', function(e) {
+            $edit_button.on('click', function(e) {
 
                 e.preventDefault();
 
@@ -81,7 +81,7 @@ var Pportfolio = {
                     var library = controller.get('library');
                     var ids = library.pluck('id');
 
-                    $('.pl-meta-gallery .gallery-ids').val(ids.join(','));
+                    $('.pl-meta-gallery .pl-field-gallery-ids').val(ids.join(','));
 
                     var items = "";
 
@@ -89,7 +89,7 @@ var Pportfolio = {
                         items += "<li><div class='item'>" + ids[i] + "</div></li>";
                     }
 
-                    $('.pl-meta-gallery .items').html(items);
+                    $('.pl-meta-gallery-items').html(items);
 
                     Pportfolio.gallery.get_preview();
 
@@ -106,7 +106,7 @@ var Pportfolio = {
             var $gallery = $('.pl-meta-gallery');
             ids = $('input', $gallery).val();
 
-            $('.pl-meta-gallery').removeClass('loaded');
+            $('.pl-meta-gallery').removeClass('pl-loaded');
 
             $.ajax({
                 type: 'POST',
@@ -129,14 +129,14 @@ var Pportfolio = {
                     var result = JSON.parse(response);
                     if (result.success) {
                         $('.pl-meta-gallery .welcome').remove();
-                        $('.pl-meta-gallery .items').html(result.output);
+                        $('.pl-meta-gallery .pl-meta-gallery-items').html(result.output);
                     }
 
-                    if (!result.success && !$('.pl-meta-gallery .items li').length) {
+                    if (!result.success && !$('.pl-meta-gallery .pl-meta-gallery-items li').length) {
                         $('.pl-meta-gallery').append('<p class="welcome"><i class="fa fa-camera-retro"></i>Create your gallery by clicking the button above "Edit gallery".</p>');
                     }
                     setTimeout(function() {
-                        $('.pl-meta-gallery').addClass('loaded');
+                        $('.pl-meta-gallery').addClass('pl-loaded');
                     }, 100);
 
                 }
@@ -145,7 +145,7 @@ var Pportfolio = {
         },
 
         select: function() {
-            var galleries_ids = $('.pl-meta-gallery .gallery-ids').val(),
+            var galleries_ids = $('.pl-meta-gallery .pl-field-gallery-ids').val(),
                 shortcode = wp.shortcode.next('gallery', '[gallery ids="' + galleries_ids + '"]'),
                 defaultPostId = wp.media.gallery.defaults.id,
                 attachments, selection;

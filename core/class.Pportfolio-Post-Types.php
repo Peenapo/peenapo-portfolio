@@ -138,7 +138,7 @@ class Pportfolio_Post_Types {
             'hierarchical'              => false,
             'menu_position'             => 25.2,
             'supports'                  => array( 'title', 'author', 'thumbnail', 'excerpt' ),
-            'menu_icon'                 => 'dashicons-images-alt2',
+            'menu_icon'                 => 'dashicons-format-gallery',
         );
 
         register_post_type( 'playouts_gallery', $args_gallery );

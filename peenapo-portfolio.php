@@ -50,10 +50,12 @@ class Pportfolio_Bootstrap {
         if( ! class_exists('Playouts_Bootstrap') ) { return; }
 
 		include PPORTFOLIO_DIR . 'core/class.Pportfolio-Post-Types.php';
+		include PPORTFOLIO_DIR . 'core/class.Pportfolio-Meta-Boxes.php';
 
         if( is_admin() ) {
 
-            // ..
+            include PPORTFOLIO_DIR . 'core/admin/class.Pportfolio-Admin.php';
+            include PPORTFOLIO_DIR . 'core/admin/class.Pportfolio-Admin-Ajax.php';
 
         }else{
 

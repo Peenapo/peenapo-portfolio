@@ -40,7 +40,7 @@ class Playouts_Element_Portfolio extends Playouts_Element {
                 'max'               => 6,
                 'step'              => 1,
                 'value'             => 3,
-                'depends'           => array( 'element' => 'layout', 'value' => array( 'grid' ) ),
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
             'gaps' => array(
                 'type'              => 'number_slider',
@@ -51,7 +51,28 @@ class Playouts_Element_Portfolio extends Playouts_Element {
                 'max'               => 200,
                 'step'              => 1,
                 'value'             => 40,
-                'depends'           => array( 'element' => 'layout', 'value' => array( 'grid' ) ),
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+            ),
+            'title_position' => array(
+                'label'             => esc_html__( 'Title Position', 'peenapo-portfolio-txd' ),
+                'type'              => 'select',
+                'options'           => array(
+                    'after_image'       => 'After Image',
+                    'inside_image'      => 'Inside Image',
+                    'none'              => 'None',
+                ),
+                'value'             => 'after_image',
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+            ),
+            'enable_overlay' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Enable Overlay', 'peenapo-layouts-txd' ),
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+            ),
+            'overlay_bg_color' => array(
+                'type'              => 'colorpicker',
+                'label'             => esc_html__( 'Overlay Background Color', 'peenapo-layouts-txd' ),
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
             'inline_class' => array(
                 'type'              => 'textfield',
@@ -80,13 +101,16 @@ class Playouts_Element_Portfolio extends Playouts_Element {
 
             'cols'              => 3,
             'gaps'              => 0,
+            'title_position'    => 'after_image',
+            'enable_overlay'    => false,
+            'overlay_bg_color'  => '',
 
             'inline_class'      => '',
             'inline_id'         => '',
             'inline_css'        => '',
         ), $atts ) );
 
-        $style = $class = $id = '';
+        $style = $class = $id = $_title = '';
 
         $class .= ! empty( $inline_class ) ? ' ' . esc_attr( $inline_class ) : '';
         $id .= ! empty( $inline_id ) ? ' id="' . esc_attr( $inline_id ) . '"' : '';
@@ -105,14 +129,13 @@ class Playouts_Element_Portfolio extends Playouts_Element {
                 break;
         }
 
-
         $_args = array(
             'post_type'     => 'playouts_portfolio',
             'tax_query' => array(
                 array (
                     'taxonomy' => 'playouts_portfolio_category',
                     'field' => 'term_id',
-                    'terms' => esc_attr( $categories ),
+                    'terms' => explode( ',', esc_attr( $categories ) ),
                 )
             )
         );
@@ -128,6 +151,20 @@ class Playouts_Element_Portfolio extends Playouts_Element {
             echo '<ul class="pl-portfolio">';
 
                 while ( $_query->have_posts() ) { $_query->the_post();
+
+                    if( $title_position == 'after_image' ) {
+                        $_title = '<div class="pl-portfolio-item-content">'.
+                            '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>'.
+                        '</div>';
+                    }elseif( $title_position == 'inside_image' ) {
+                        $_title = '<div class="pl-table">'.
+                            '<div class="pl-cell">'.
+                                '<div class="pl-portfolio-item-content">'.
+                                    '<h4>' . get_the_title() . '</h4>'.
+                                '</div>'.
+                            '</div>'.
+                        '</div>';
+                    }
 
                     include PPORTFOLIO_DIR . 'templates/portfolio-item.php';
 

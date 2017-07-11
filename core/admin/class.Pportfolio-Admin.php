@@ -15,8 +15,25 @@ class Pportfolio_Admin {
 	 */
 	static function init() {
 
+        # add support settings tab
+        add_filter( 'bwg_support', array( 'Pportfolio_Admin', 'add_support_settings_tab_portfolio' ) );
+        add_action( 'playouts_support_portfolio', array( 'Pportfolio_Admin', 'add_support_settings_tab_content_portfolio' ) );
+
         # enqueue scripts
         add_action( 'admin_enqueue_scripts', array( 'Pportfolio_Admin', 'enqueue_scripts' ) );
+
+    }
+
+    static function add_support_settings_tab_portfolio( $support_layouts_settings ) {
+
+        $support_layouts_settings['portfolio'] = array( 'label' => __( 'Portfolio', 'peenapo-portfolio-txd-txd' ) );
+        return $support_layouts_settings;
+
+    }
+
+    static function add_support_settings_tab_content_portfolio() {
+
+        include PPORTFOLIO_DIR . 'templates/support-settings.php';
 
     }
 

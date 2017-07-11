@@ -10,7 +10,7 @@
 .pl-meta-gallery .pl-gallery-welcome {position:absolute;top:50%;width:100%;margin:-9px 0 0 0;text-align:center;color:#979da6;}
 
 .pl-meta-gallery .pl-bottom-holder {width:100%;margin:0 0 18px 0;}
-.pl-meta-gallery .pl-button {display:inline-block;padding:0 12px;line-height:32px;background-color:#f93d66;color:#fff;font-size:16px;cursor:pointer;border-radius:3px;}
+.pl-meta-gallery .pl-button {display:inline-block;height:auto;padding:0 12px;line-height:32px;background-color:#f93d66;color:#fff;font-size:16px;cursor:pointer;border-radius:3px;}
 
 .pl-meta-gallery-inner {position:relative;}
 .pl-meta-gallery .pl-meta-gallery-items {width:100%;background-color:#f4f4f4;padding:10px 10px 0 10px;min-height:140px;font-size:0;}

@@ -51,6 +51,7 @@ class Pportfolio_Bootstrap {
 
 		include PPORTFOLIO_DIR . 'core/class.Pportfolio-Post-Types.php';
 		include PPORTFOLIO_DIR . 'core/class.Pportfolio-Meta-Boxes.php';
+		include PPORTFOLIO_DIR . 'core/class.Pportfolio-Element.php';
 
         if( is_admin() ) {
 
@@ -59,7 +60,7 @@ class Pportfolio_Bootstrap {
 
         }else{
 
-			// ..
+			include PPORTFOLIO_DIR . 'core/class.Pportfolio-Public.php';
 
 		}
 

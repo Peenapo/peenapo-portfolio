@@ -10,16 +10,19 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } # exit if accessed directly
 class Pportfolio_Post_Types {
 
     /*
-	 *
+	 * start here
 	 *
 	 */
 	static function init() {
 
+        // register the custom post types
         add_action( 'init', array( 'Pportfolio_Post_Types', 'register' ) );
 
     }
 
 	static function register() {
+
+        $options = get_option('playouts_options');
 
         /*
          * portfolio post type
@@ -48,13 +51,13 @@ class Pportfolio_Post_Types {
 
         $args_portfolio = array(
             'labels'                    => $labels_portfolio,
-            'taxonomies'                => array( 'playouts_portfolio_category', 'post_tag' ),
+            'taxonomies'                => array( 'playouts_portfolio_category', 'playouts_portfolio_tag' ),
             'public'                    => true,
             'publicly_queryable'        => true,
             'show_ui'                   => true,
             'show_in_menu'              => true,
             'query_var'                 => true,
-            'rewrite'                   => array( 'slug' => 'project' ),
+            'rewrite'                   => array( 'slug' => ( isset( $options['portfolio_slug'] ) and ! empty( $options['portfolio_slug'] ) ) ? sanitize_title( $options['portfolio_slug'] ) : 'project' ),
             'capability_type'           => 'post',
             'has_archive'               => true,
             'hierarchical'              => false,
@@ -98,12 +101,41 @@ class Pportfolio_Post_Types {
     	);
     	register_taxonomy( 'playouts_portfolio_category', 'playouts_portfolio', $portfolio_category_args );
 
+        $portfolio_tag_labels = array(
+    		'name'                      => _x( 'Tags', 'taxonomy general name', 'peenapo-layouts-txd' ),
+    		'singular_name'             => _x( 'Tag', 'taxonomy singular name', 'peenapo-layouts-txd' ),
+    		'search_items'              => __( 'Search Tags', 'peenapo-layouts-txd' ),
+    		'popular_items'             => __( 'Popular Tags', 'peenapo-layouts-txd' ),
+    		'all_items'                 => __( 'All Tags', 'peenapo-layouts-txd' ),
+    		'parent_item'               => null,
+    		'parent_item_colon'         => null,
+    		'edit_item'                 => __( 'Edit Tag', 'peenapo-layouts-txd' ),
+    		'update_item'               => __( 'Update Tag', 'peenapo-layouts-txd' ),
+    		'add_new_item'              => __( 'Add New Tag', 'peenapo-layouts-txd' ),
+    		'new_item_name'             => __( 'New Tag Name', 'peenapo-layouts-txd' ),
+    		'separate_items_with_commas'=> __( 'Separate tags with commas', 'peenapo-layouts-txd' ),
+    		'add_or_remove_items'       => __( 'Add or remove tags', 'peenapo-layouts-txd' ),
+    		'choose_from_most_used'     => __( 'Choose from the most used tags', 'peenapo-layouts-txd' ),
+    		'not_found'                 => __( 'No tags found.', 'peenapo-layouts-txd' ),
+    		'menu_name'                 => __( 'Tags', 'peenapo-layouts-txd' ),
+    	);
+    	$portfolio_tag_args = array(
+            'hierarchical'              => false,
+            'public'                    => false,
+            'labels'                    => $portfolio_tag_labels,
+            'show_ui'                   => true,
+            'show_admin_column'         => true,
+            'query_var'                 => true,
+            'rewrite'                   => array( 'slug' => 'project_category' ),
+    	);
+    	register_taxonomy( 'playouts_portfolio_tag', 'playouts_portfolio', $portfolio_tag_args );
+
 
         /*
          * gallery post type
          *
          */
-        $plural_gallery = esc_html__( 'Galleries', 'linked-cartel' );
+        /*$plural_gallery = esc_html__( 'Galleries', 'linked-cartel' );
         $singular_gallery = esc_html__( 'Gallery', 'linked-cartel' );
 
         $labels_gallery = array(
@@ -146,7 +178,7 @@ class Pportfolio_Post_Types {
         /*
          * gallery taxonomy
          *
-         */
+         *
     	$gallery_category_labels = array(
     		'name'                      => _x( 'Categories', 'taxonomy general name', 'peenapo-layouts-txd' ),
     		'singular_name'             => _x( 'Category', 'taxonomy singular name', 'peenapo-layouts-txd' ),
@@ -174,7 +206,7 @@ class Pportfolio_Post_Types {
             'query_var'                 => true,
             'rewrite'                   => array( 'slug' => 'gallery_category' ),
     	);
-    	register_taxonomy( 'playouts_gallery_category', 'playouts_gallery', $gallery_category_args );
+    	register_taxonomy( 'playouts_gallery_category', 'playouts_gallery', $gallery_category_args );*/
 
     }
 

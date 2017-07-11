@@ -1,0 +1,17 @@
+
+/* project main container */
+.pl-project-container {}
+.pl-project-container * {box-sizing:border-box;-webkit-box-sizing:border-box;outline:0!important;}
+
+/* featured image */
+.pl-project-featured {}
+.pl-project-featured img {width:100%;margin-bottom:30px;}
+
+/* single project gallery */
+.pl-project-gallery {padding:0;margin:0;list-style:none;}
+.pl-project-gallery li {}
+
+/* portfolio element */
+.pl-portfolio-outer {}
+.pl-portfolio {padding:0;margin:0;list-style:none;}
+.pl-portfolio-item {}

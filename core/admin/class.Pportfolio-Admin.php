@@ -28,7 +28,10 @@ class Pportfolio_Admin {
             # js
             wp_register_script( 'pportfolio', PPORTFOLIO_URL . 'assets/admin/js/pportfolio.js', array(), '1.0', true );
     		wp_localize_script( 'pportfolio', 'pportfolio_data', array(
-                'ajax' => admin_url( 'admin-ajax.php' )
+                'ajax' => admin_url( 'admin-ajax.php' ),
+                'i18n' => array(
+                    'gallery_welcome' => esc_html__( 'Start uploading your gallery by clicking the button "Edit gallery".', 'peenapo-portfolio-txd' )
+                )
             ));
     		wp_enqueue_script( 'pportfolio' );
 

@@ -40,7 +40,7 @@ class Pportfolio_Public {
 
     static function portfolio_output() {
 
-        include PPORTFOLIO_DIR . 'templates/output-single-portfolio.php';
+        include PPORTFOLIO_DIR . 'templates/portfolio-content.php';
 
     }
 

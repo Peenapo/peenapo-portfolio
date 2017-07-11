@@ -33,7 +33,7 @@ class Pportfolio_Admin {
 
     static function add_support_settings_tab_content_portfolio() {
 
-        include PPORTFOLIO_DIR . 'templates/support-settings.php';
+        include PPORTFOLIO_DIR . 'templates/support-settings-portfolio.php';
 
     }
 

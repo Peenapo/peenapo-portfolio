@@ -64,12 +64,20 @@ class Playouts_Element_Portfolio extends Playouts_Element {
 
         ob_start();
         if ( $_query->have_posts() ) {
+
+            $options = Playouts_Public::$options;
+            $thumb_size = ( isset( $options['portfolio_thumb_grid'] ) and ! empty( $options['portfolio_thumb_grid'] ) ) ? esc_attr( $options['portfolio_thumb_grid'] ) : 'large'; 
+
             echo '<ul class="pl-portfolio">';
-            while ( $_query->have_posts() ) { $_query->the_post();
-                include PPORTFOLIO_DIR . 'templates/portfolio-item.php';
-            }
+
+                while ( $_query->have_posts() ) { $_query->the_post();
+                    include PPORTFOLIO_DIR . 'templates/portfolio-item.php';
+                }
+
             echo '<ul>';
+
             wp_reset_postdata();
+
         }else{
             // no posts found
         }

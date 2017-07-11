@@ -11,7 +11,9 @@
 .pl-project-gallery {padding:0;margin:0;list-style:none;}
 .pl-project-gallery li {}
 
-/* portfolio element */
+/* portfolio module */
 .pl-portfolio-outer {}
 .pl-portfolio {padding:0;margin:0;list-style:none;}
 .pl-portfolio-item {}
+
+.pl-portfolio-featred {}

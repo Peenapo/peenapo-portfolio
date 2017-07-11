@@ -10,23 +10,23 @@ return array(
 
     'portfolio_slug' => array(
         'type'              => 'textfield',
-        'label'             => esc_html__( 'Project Slug', 'peenapo-layouts-txd' ),
-        'description'       => esc_html__( 'The slug of the project url. It is recommended to re-save the permalink format after you change ths option by going to Settings > Permalinks.', 'peenapo-layouts-txd' ),
+        'label'             => esc_html__( 'Project Slug', 'peenapo-portfolio-txd' ),
+        'description'       => esc_html__( 'The slug of the project url. It is recommended to re-save the permalink format after you change ths option by going to Settings > Permalinks.', 'peenapo-portfolio-txd' ),
         'placeholder'       => 'project',
     ),
 
     'portfolio_thumb_grid' => array(
         'type'              => 'select',
-        'label'             => esc_html__( 'Grid Thumbnail Size', 'peenapo-layouts-txd' ),
-        'description'       => esc_html__( 'Select the image size for the grid elements.', 'peenapo-layouts-txd' ),
+        'label'             => esc_html__( 'Grid Thumbnail Size', 'peenapo-portfolio-txd' ),
+        'description'       => esc_html__( 'Select the image size for the grid elements.', 'peenapo-portfolio-txd' ),
         'options'           => $thumbnail_sizes_options,
         'value'             => 'large'
     ),
 
     'portfolio_thumb_single' => array(
         'type'              => 'select',
-        'label'             => esc_html__( 'Single Thumbnail Size', 'peenapo-layouts-txd' ),
-        'description'       => esc_html__( 'Select the image size for the single preview of the projects.', 'peenapo-layouts-txd' ),
+        'label'             => esc_html__( 'Single Thumbnail Size', 'peenapo-portfolio-txd' ),
+        'description'       => esc_html__( 'Select the image size for the single preview of the projects.', 'peenapo-portfolio-txd' ),
         'options'           => $thumbnail_sizes_options,
         'value'             => 'large'
     ),

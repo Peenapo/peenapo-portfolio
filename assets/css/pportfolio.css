@@ -12,8 +12,25 @@
 .pl-project-gallery li {}
 
 /* portfolio module */
-.pl-portfolio-outer {}
-.pl-portfolio {padding:0;margin:0;list-style:none;}
-.pl-portfolio-item {}
+.pl-portfolio-outer {width:100%;}
+.pl-portfolio {width:100%;padding:0;margin:0;list-style:none;}
+.pl-portfolio a {text-decoration:none!important;}
 
-.pl-portfolio-featred {}
+    /* portfolio layouts */
+    .pl-portfolio-layout-grid {}
+
+    /* portfolio columns */
+    .pl-portfolio-cols-2 .pl-portfolio-item {width:50%;}
+    .pl-portfolio-cols-3 .pl-portfolio-item {width:33.3334%;}
+    .pl-portfolio-cols-4 .pl-portfolio-item {width:25%;}
+    .pl-portfolio-cols-5 .pl-portfolio-item {width:20%;}
+    .pl-portfolio-cols-6 .pl-portfolio-item {width:16.6667%;}
+
+.pl-portfolio-item {width:33.3334%;}
+.pl-portfolio-item-inner {}
+
+.pl-portfolio-featred {margin:0 0 30px 0;}
+
+.pl-portfolio-item .pl-portfolio-item-content {}
+.pl-portfolio-item .pl-portfolio-item-content h4 {margin:0;}
+.pl-portfolio-item .pl-portfolio-item-content h4 a {font-size:19px;font-weight:800;line-height:1.7em;color:#111;}

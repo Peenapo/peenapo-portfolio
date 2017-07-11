@@ -1,7 +1,7 @@
 <div class="plg-tab-content">
     <div class="pl-panel-form">
 
-        <h3><?php esc_html_e( 'General', 'peenapo-layouts-txd' ); ?></h3>
+        <h3><?php esc_html_e( 'General', 'peenapo-portfolio-txd' ); ?></h3>
 
         <form class="plg-layouts-options pl-panel-content" id="plg-layouts-options-general">
 
@@ -24,7 +24,7 @@
 
         <div class="plg-panel-footer">
 
-            <a href="#" id="plg-do-layouts-settings-save" class="pl-button-round pl-button-save pl-button-primary"><?php esc_html_e('Save Settings', 'peenapo-layouts-txd'); ?></a>
+            <a href="#" id="plg-do-layouts-settings-save" class="pl-button-round pl-button-save pl-button-primary"><?php esc_html_e('Save Settings', 'peenapo-portfolio-txd'); ?></a>
 
         </div>
 

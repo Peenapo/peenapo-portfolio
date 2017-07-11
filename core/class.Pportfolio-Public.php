@@ -48,11 +48,20 @@ class Pportfolio_Public {
 
         if( ( is_single() and get_post_type() == 'playouts_portfolio' ) or Playouts_Public::is_builder_used() ) {
 
-            # css
-            wp_enqueue_style( 'pportfolio-style', PPORTFOLIO_URL . 'assets/css/pportfolio.css' );
+            # dynamic enqueue
+            if( in_array( 'bw_portfolio', Playouts_Public::$parsed_ids ) ) {
 
-            # js
-            wp_enqueue_style( 'pportfolio-main', PPORTFOLIO_URL . 'assets/js/pportfolio.js' );
+                # css
+                wp_enqueue_style( 'pportfolio-style', PPORTFOLIO_URL . 'assets/css/pportfolio.css' );
+
+                # js
+                wp_enqueue_script( 'jquery' );
+
+                wp_enqueue_script( 'pportfolio-isotope', PPORTFOLIO_URL . 'assets/js/vendor/isotope.pkgd.min.js', array( 'jquery', 'playouts-front-plugins' ), '1.0', true );
+                wp_enqueue_script( 'pportfolio-main', PPORTFOLIO_URL . 'assets/js/pportfolio.js', array( 'jquery', 'playouts-front-plugins' ), '1.0', true );
+
+            }
+
 
         }
 

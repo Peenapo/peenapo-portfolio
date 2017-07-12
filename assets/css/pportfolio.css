@@ -30,11 +30,13 @@
 .pl-portfolio-item-inner {}
 
 .pl-portfolio-image {position:relative;margin:0 0 30px 0;}
-.pl-portfolio-overlay {position:absolute;top:0;left:0;right:0;bottom:0;background-color:#fff;text-align:center;padding:0 45px;opacity:0;transition:all .36s;-webkit-transition:all .36s;}
+.pl-portfolio-overlay {position:absolute;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.3);text-align:center;padding:0 45px;opacity:0;transition:all .36s;-webkit-transition:all .36s;}
 
 .pl-portfolio-image:hover .pl-portfolio-overlay {opacity:1;}
 
 .pl-portfolio-item .pl-portfolio-item-content {}
 .pl-portfolio-item .pl-portfolio-item-content h4 {margin:0;}
-.pl-portfolio-item .pl-portfolio-item-content h4, .pl-portfolio-item .pl-portfolio-item-content h4 a {font-size:20px;font-weight:800;line-height:1.5em;color:#111;}
+.pl-portfolio-item .pl-portfolio-item-content h4, .pl-portfolio-item .pl-portfolio-item-content h4 a {font-size:20px;font-weight:800;line-height:1.3em;color:#111;}
+.pl-portfolio-item .pl-portfolio-item-content > span {display:block;font-size:13px;color:#111;margin-top:3px;}
 .pl-portfolio-item .pl-portfolio-overlay .pl-portfolio-item-content h4 {color:#fff;}
+.pl-portfolio-item .pl-portfolio-overlay .pl-portfolio-item-content > span {color:#fff;}

@@ -49,7 +49,7 @@ class Pportfolio_Public {
         if( ( is_single() and get_post_type() == 'playouts_portfolio' ) or Playouts_Public::is_builder_used() ) {
 
             # dynamic enqueue
-            if( in_array( 'bw_portfolio', Playouts_Public::$parsed_ids ) ) {
+            if( in_array( 'bw_portfolio_grid', Playouts_Public::$parsed_ids ) ) {
 
                 # css
                 wp_enqueue_style( 'pportfolio-style', PPORTFOLIO_URL . 'assets/css/pportfolio.css' );

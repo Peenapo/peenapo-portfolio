@@ -7,12 +7,12 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; } # exit if accessed directly
 
-class Playouts_Element_Portfolio extends Playouts_Element {
+class Playouts_Element_Portfolio_Grid extends Playouts_Element {
 
     function init() {
 
-        $this->module = 'bw_portfolio';
-        $this->name = esc_html__( 'Portfolio', 'peenapo-portfolio-txd' );
+        $this->module = 'bw_portfolio_grid';
+        $this->name = esc_html__( 'Portfolio Grid', 'peenapo-portfolio-txd' );
         $this->view = 'element';
         $this->category = array( 'portfolio' => __( 'Portfolio', 'peenapo-portfolio-txd' ) );
         $this->module_color = '#4d49ee';
@@ -64,10 +64,27 @@ class Playouts_Element_Portfolio extends Playouts_Element {
                 'value'             => 'after_image',
                 'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
+            'title_size' => array(
+                'type'              => 'number_slider',
+                'label'             => esc_html__( 'Title Font Size', 'peenapo-portfolio-txd' ),
+                'append_after'      => 'pixels',
+                'min'               => 15,
+                'max'               => 50,
+                'step'              => 1,
+                'value'             => 20,
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+            ),
             'enable_overlay' => array(
                 'type'              => 'true_false',
                 'label'             => esc_html__( 'Enable Overlay', 'peenapo-layouts-txd' ),
                 'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+                'width'             => 50
+            ),
+            'enable_category' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Enable Category', 'peenapo-layouts-txd' ),
+                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+                'width'             => 50
             ),
             'overlay_bg_color' => array(
                 'type'              => 'colorpicker',
@@ -102,7 +119,9 @@ class Playouts_Element_Portfolio extends Playouts_Element {
             'cols'              => 3,
             'gaps'              => 0,
             'title_position'    => 'after_image',
+            'title_size'        => 20,
             'enable_overlay'    => false,
+            'enable_category'   => false,
             'overlay_bg_color'  => '',
 
             'inline_class'      => '',
@@ -153,14 +172,26 @@ class Playouts_Element_Portfolio extends Playouts_Element {
                 while ( $_query->have_posts() ) { $_query->the_post();
 
                     if( $title_position == 'after_image' ) {
+                        $_terms_arr = get_the_terms( get_the_ID(), 'playouts_portfolio_category' );
+                        $_terms = array();
+                        foreach( $_terms_arr as $_t ) {
+                            $_terms[] = '<a href="' . get_term_link( $_t ) . '">' . $_t->name . '</a>';
+                        }
                         $_title = '<div class="pl-portfolio-item-content">'.
-                            '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>'.
+                            '<h4><a href="' . get_permalink() . '" style="font-size:' . (int) $title_size . 'px;">' . get_the_title() . '</a></h4>'.
+                            ( $enable_category ? '<span>' . implode( ', ', $_terms ) . '</span>' : '' ) .
                         '</div>';
                     }elseif( $title_position == 'inside_image' ) {
+                        $_terms_arr = get_the_terms( get_the_ID(), 'playouts_portfolio_category' );
+                        $_terms = array();
+                        foreach( $_terms_arr as $_t ) {
+                            $_terms[] = '<span>' . $_t->name . '</span>';
+                        }
                         $_title = '<div class="pl-table">'.
                             '<div class="pl-cell">'.
                                 '<div class="pl-portfolio-item-content">'.
-                                    '<h4>' . get_the_title() . '</h4>'.
+                                    '<h4 style="font-size:' . (int) $title_size . 'px;">' . get_the_title() . '</h4>'.
+                                    ( $enable_category ? '<span>' . implode( ', ', $_terms ) . '</span>' : '' ) .
                                 '</div>'.
                             '</div>'.
                         '</div>';
@@ -184,4 +215,4 @@ class Playouts_Element_Portfolio extends Playouts_Element {
 
     }
 }
-new Playouts_Element_Portfolio;
+new Playouts_Element_Portfolio_Grid;

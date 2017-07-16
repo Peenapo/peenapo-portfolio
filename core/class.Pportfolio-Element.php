@@ -23,14 +23,6 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
                 'taxonomy'          => 'playouts_portfolio_category',
                 'multiple'          => true,
             ),
-            'layout' => array(
-                'label'             => esc_html__( 'Layout', 'peenapo-portfolio-txd' ),
-                'type'              => 'select',
-                'options'           => array(
-                    'grid'          => 'Grid',
-                ),
-                'value'             => 'grid'
-            ),
             'cols' => array(
                 'type'              => 'number_slider',
                 'label'             => esc_html__( 'Columns Per Row', 'peenapo-portfolio-txd' ),
@@ -40,7 +32,6 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
                 'max'               => 6,
                 'step'              => 1,
                 'value'             => 3,
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
             'gaps' => array(
                 'type'              => 'number_slider',
@@ -51,7 +42,6 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
                 'max'               => 200,
                 'step'              => 1,
                 'value'             => 40,
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
             'title_position' => array(
                 'label'             => esc_html__( 'Title Position', 'peenapo-portfolio-txd' ),
@@ -62,7 +52,6 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
                     'none'              => 'None',
                 ),
                 'value'             => 'after_image',
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
             'title_size' => array(
                 'type'              => 'number_slider',
@@ -72,25 +61,48 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
                 'max'               => 50,
                 'step'              => 1,
                 'value'             => 20,
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
             ),
+            'text_alignment' => array(
+                'type'              => 'select',
+				'label'             => esc_html__( 'Text Alignment', 'peenapo-layouts-txd' ),
+                'options'           => array(
+                    ''                  => 'Inherit',
+                    'left'              => 'Left',
+                    'center'            => 'Center',
+                    'right'             => 'Right',
+                ),
+                'value'             => '',
+			),
             'enable_overlay' => array(
                 'type'              => 'true_false',
                 'label'             => esc_html__( 'Enable Overlay', 'peenapo-layouts-txd' ),
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
-                'width'             => 50
-            ),
-            'enable_category' => array(
-                'type'              => 'true_false',
-                'label'             => esc_html__( 'Enable Category', 'peenapo-layouts-txd' ),
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
-                'width'             => 50
             ),
             'overlay_bg_color' => array(
                 'type'              => 'colorpicker',
                 'label'             => esc_html__( 'Overlay Background Color', 'peenapo-layouts-txd' ),
-                'depends'           => array( 'element' => 'layout', 'value' => 'grid' ),
+                'depends'           => array( 'element' => 'enable_overlay', 'value' => '1' ),
             ),
+            'enable_category' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Enable Category', 'peenapo-layouts-txd' ),
+                'width'             => 50
+            ),
+            'enable_filter' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Enable Filter', 'peenapo-layouts-txd' ),
+                'width'             => 50
+            ),
+            'filter_alignment' => array(
+                'type'              => 'select',
+				'label'             => esc_html__( 'Filter Alignment', 'peenapo-layouts-txd' ),
+                'options'           => array(
+                    'left'              => 'Left',
+                    'center'            => 'Center',
+                    'right'             => 'Right',
+                ),
+                'value'             => '',
+                'depends'           => array( 'element' => 'enable_filter', 'value' => '1' ),
+			),
             'inline_class' => array(
                 'type'              => 'textfield',
                 'label'             => esc_html__( 'CSS Classes', 'peenapo-portfolio-txd' ),
@@ -114,16 +126,16 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
 
         extract( $assigned_atts = shortcode_atts( array(
             'categories'        => '',
-            'layout'            => 'grid',
-
             'cols'              => 3,
             'gaps'              => 0,
             'title_position'    => 'after_image',
             'title_size'        => 20,
+            'text_alignment'    => 'inherit',
             'enable_overlay'    => false,
-            'enable_category'   => false,
             'overlay_bg_color'  => '',
-
+            'enable_category'   => false,
+            'enable_filter'     => false,
+            'filter_alignment'  => 'left',
             'inline_class'      => '',
             'inline_id'         => '',
             'inline_css'        => '',
@@ -135,18 +147,11 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
         $id .= ! empty( $inline_id ) ? ' id="' . esc_attr( $inline_id ) . '"' : '';
         $style .= ! empty( $inline_css ) ? esc_attr( $inline_css ) : '';
 
+        $style .= ! empty( $text_alignment ) ? 'text-align:' . esc_attr( $text_alignment ) : '';
+
         if( empty( $categories ) ) { return; }
 
-        $class .= ' pl-portfolio-layout-' . esc_attr( $layout );
-
-        switch( $layout ) {
-            case 'grid':
-                $class .= ' pl-portfolio-cols-' . (int) $cols;
-                if( $gaps ) {
-                    $style .= 'width:calc(100% + ' . (int) $gaps . 'px);';
-                }
-                break;
-        }
+        $class .= ' pl-portfolio-cols-' . (int) $cols;
 
         $_args = array(
             'post_type'     => 'playouts_portfolio',
@@ -166,8 +171,29 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
 
             $options = Playouts_Public::$options;
             $thumb_size = ( isset( $options['portfolio_thumb_grid'] ) and ! empty( $options['portfolio_thumb_grid'] ) ) ? esc_attr( $options['portfolio_thumb_grid'] ) : 'large';
+            $_style = '';
+            if( $gaps ) {
+                $_style .= 'width:calc(100% + ' . (int) $gaps . 'px);';
+            }
 
-            echo '<ul class="pl-portfolio">';
+            if( $enable_filter ) {
+
+                $_filter_style = '';
+                if( $filter_alignment ) {
+                    $_filter_style .= 'text-align:' . esc_attr( $filter_alignment ) . ';';
+                }
+
+                echo '<div class="pl-filter" style="' . $_filter_style . '"><ul>';
+                    echo '<li data-filter="*" class="pl-active">' . esc_html__( 'All', 'peenapo-portfolio-txd' ) . '</li>';
+                    foreach( explode( ',', $categories ) as $category ) {
+                        $cat_obj = get_term( $category, 'playouts_portfolio_category' );
+                        echo '<li data-filter=".pl-to-filter-' . $category . '">' . $cat_obj->name . '</li>';
+                    }
+                echo '</ul></div>';
+
+            }
+
+            echo '<ul class="pl-portfolio" style="' . $_style . '">';
 
                 while ( $_query->have_posts() ) { $_query->the_post();
 
@@ -197,7 +223,7 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
                         '</div>';
                     }
 
-                    include PPORTFOLIO_DIR . 'templates/portfolio-item.php';
+                    include PPORTFOLIO_DIR . 'templates/item-grid.php';
 
                 }
 

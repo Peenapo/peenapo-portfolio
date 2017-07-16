@@ -1,4 +1,15 @@
-<li class="pl-portfolio-item"<?php if( $gaps ) { echo " style='padding:0 " . (int) $gaps . "px " . (int) $gaps . "px 0;'"; } ?>>
+<?php
+$filter_classes = '';
+if( $enable_filter ) {
+    $terms = get_the_terms( get_the_ID(), 'playouts_portfolio_category' );
+    foreach( $terms as $term ) {
+        $filter_classes .= ' pl-to-filter-' . $term->term_id;
+    }
+}
+?>
+
+
+<li class="pl-portfolio-item<?php echo $filter_classes; ?>"<?php if( $gaps ) { echo " style='padding:0 " . (int) $gaps . "px " . (int) $gaps . "px 0;'"; } ?>>
     <div class="pl-portfolio-item-inner">
         <?php $gallery = get_post_meta( get_the_ID(), 'pportfolio_gallery', true ); ?>
         <?php if( has_post_thumbnail() or ! empty( $gallery ) ) : ?>

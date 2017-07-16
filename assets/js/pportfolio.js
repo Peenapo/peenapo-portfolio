@@ -12,11 +12,20 @@ var Pportfolio = {
 
         start: function() {
 
+            this.build();
+
+        },
+
+        build: function() {
+
             var $isotope_container = $('.pl-portfolio');
 
             $isotope_container.each(function() {
+
                 var self = $(this);
+
                 self.imagesLoaded(function() {
+
                     self.isotope({
                         speed: 200,
                         easing: 'ease-out',
@@ -33,8 +42,31 @@ var Pportfolio = {
                             transform: 'scale(1)'
                         }
                     });
+
+                    var $filter = self.closest('.pl-portfolio-outer').find('.pl-filter');
+
+                    if( $filter.length ) {
+
+                        $( 'li', $filter ).on('click', Pportfolio.isotope.filter);
+
+                    }
+
                 });
+
             });
+
+        },
+
+        filter: function() {
+
+            var self = $(this),
+                $filter = self.closest('.pl-filter').find('li'),
+                $portfolio = self.closest('.pl-portfolio-outer').find('.pl-portfolio');
+
+            $filter.removeClass('pl-active');
+            self.addClass('pl-active');
+
+            $portfolio.isotope({ filter: self.attr('data-filter') });
 
         }
 

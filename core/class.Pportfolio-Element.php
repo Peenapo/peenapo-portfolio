@@ -149,7 +149,9 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
 
         $style .= ! empty( $text_alignment ) ? 'text-align:' . esc_attr( $text_alignment ) : '';
 
-        if( empty( $categories ) ) { return; }
+        if( empty( $categories ) ) {
+            return '<p class="pl-label-alert">' . esc_html__( 'Category can\'t be empty. Edit the portfolio element and select a category.', '' ) . '</p>';
+        }
 
         $class .= ' pl-portfolio-cols-' . (int) $cols;
 
@@ -232,7 +234,7 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
             wp_reset_postdata();
 
         }else{
-            // no posts found
+            echo '<p class="pl-label-alert">' . esc_html__( 'No projects found. Add some by going to "Projects > Add New".', '' ) . '</p>';
         }
 
         return '<div class="pl-portfolio-outer' . $class . '" style="' . $style . '"' . $id . '>'.

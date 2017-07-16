@@ -57,6 +57,7 @@ class Pportfolio_Bootstrap {
 
             include PPORTFOLIO_DIR . 'core/admin/class.Pportfolio-Admin.php';
             include PPORTFOLIO_DIR . 'core/admin/class.Pportfolio-Admin-Ajax.php';
+            include PPORTFOLIO_DIR . 'core/admin/class.Pportfolio-Admin-Layouts.php';
 
         }else{
 

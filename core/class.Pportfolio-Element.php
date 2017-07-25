@@ -244,3 +244,283 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
     }
 }
 new Playouts_Element_Portfolio_Grid;
+
+class Playouts_Element_Carousel extends Playouts_Repeater_Element {
+
+    static $index = 0;
+    static $title_font_size = 60;
+    static $sub_title_font_size = 17;
+
+    function init() {
+
+        $this->module = 'bw_carousel';
+        $this->module_item = 'bw_carousel_item';
+        $this->name = esc_html__( 'Carousel', 'peenapo-layouts-txd' );
+        $this->view = 'repeater';
+        $this->category = array( 'portfolio' => __( 'Portfolio', 'peenapo-portfolio-txd' ) );
+        $this->module_color = '#e1c140';
+        $this->params = array(
+            'items' => array(
+                'type'               => 'repeater',
+                'label'              => esc_html__( 'Carousel slides', 'peenapo-layouts-txd' ),
+                'description'        => esc_html__( 'You can add as many slides as you need, just click the plus icon.', 'peenapo-layouts-txd' ),
+            ),
+            'title_font_size' => array(
+                'type'              => 'number_slider',
+                'label'             => esc_html__( 'Title Font Size', 'peenapo-portfolio-txd' ),
+                'append_after'      => 'pixels',
+                'min'               => 40,
+                'max'               => 150,
+                'step'              => 1,
+                'value'             => 60,
+            ),
+            'sub_title_font_size' => array(
+                'type'              => 'number_slider',
+                'label'             => esc_html__( 'Sub Title Font Size', 'peenapo-portfolio-txd' ),
+                'append_after'      => 'pixels',
+                'min'               => 15,
+                'max'               => 50,
+                'step'              => 1,
+                'value'             => 17,
+            ),
+            'autoplay' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Enable Slider Autoplay', 'peenapo-layouts-txd' ),
+			),
+            'autoplay_interval' => array(
+                'type'              => 'number_slider',
+                'label'             => esc_html__( 'Autoplay Interval.', 'peenapo-portfolio-txd' ),
+				'description'       => esc_html__( '1000 ms = 1 second.', 'peenapo-portfolio-txd' ),
+                'append_after'      => 'Milliseconds',
+                'min'               => 2000,
+                'max'               => 10000,
+                'step'              => 100,
+                'value'             => 4000,
+                'depends'           => array( 'element' => 'autoplay', 'value' => '1' ),
+            ),
+            'inline_class' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'CSS Classes', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_id' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'Element ID', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_css' => array(
+                'type'              => 'textarea',
+                'label'             => esc_html__( 'Inline CSS', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+        );
+
+    }
+
+    static function construct( $atts = array(), $content = null ) {
+
+        self::$title_font_size = ( isset( $atts['title_font_size'] ) and ! empty( $atts['title_font_size'] ) ) ? (int) $atts['title_font_size'] : 60;
+        self::$sub_title_font_size = ( isset( $atts['sub_title_font_size'] ) and ! empty( $atts['sub_title_font_size'] ) ) ? (int) $atts['sub_title_font_size'] : 17;
+
+    }
+
+    static function output( $atts = array(), $content = null ) {
+
+        extract( $assigned_atts = shortcode_atts( array(
+            'title_font_size'   => 60,
+            'sub_title_font_size' => 17,
+            'autoplay'          => false,
+            'autoplay_interval' => 4000,
+            'inline_class'      => '',
+            'inline_id'         => '',
+            'inline_css'        => '',
+        ), $atts ) );
+
+        $style = $class = $id = $attr = '';
+
+        $class .= ! empty( $inline_class ) ? ' ' . esc_attr( $inline_class ) : '';
+        $id .= ! empty( $inline_id ) ? ' id="' . esc_attr( $inline_id ) . '"' : '';
+        $style .= ! empty( $inline_css ) ? esc_attr( $inline_css ) : '';
+
+        self::$index = 0;
+
+        ob_start();
+
+        if( $autoplay ) { $attr .= ' data-autoplay="' . (int) $autoplay_interval . '"]'; }
+
+        echo '<div class="pl-carousel' . $class . '" style="' . $style . '"' . $id . $attr . '>';
+            echo $content;
+            echo '<a href="#" class="pl-carousel-nav pl-carousel-nav-prev"><i class="pl-7s-angle-left"></i></a>';
+            echo '<a href="#" class="pl-carousel-nav pl-carousel-nav-next"><i class="pl-7s-angle-right"></i></a>';
+        echo '</div>';
+
+        return ob_get_clean();
+
+    }
+}
+new Playouts_Element_Carousel;
+
+class Playouts_Element_Carousel_Item extends Playouts_Repeater_Item_Element {
+
+    function init() {
+
+        $this->module = 'bw_carousel_item';
+        $this->module_parent = 'bw_carousel';
+        $this->name = esc_html__( 'Carousel Slide', 'peenapo-layouts-txd' );
+        $this->view = 'repeater_item';
+
+        $this->params = array(
+            'title' => array(
+                'type'               => 'textfield',
+				'label'              => esc_html__( 'Title', 'peenapo-layouts-txd' ),
+				'value'              => esc_html__( 'Slide title', 'peenapo-layouts-txd' ),
+			),
+            'subtitle' => array(
+                'type'               => 'textfield',
+				'label'              => esc_html__( 'Sub-Title', 'peenapo-layouts-txd' ),
+			),
+            'position' => array(
+                'type'              => 'select',
+				'label'             => esc_html__( 'Text Position', 'peenapo-layouts-txd' ),
+				'description'       => esc_html__( 'Select the position of the slide text content', 'peenapo-layouts-txd' ),
+				'options'           => array(
+                    'top_left'      => 'Top Left',
+                    'top_middle'    => 'Top Middle',
+                    'top_right'     => 'Top Right',
+                    'center_left'   => 'Center Left',
+                    'center_middle' => 'Center Middle',
+                    'center_right'  => 'Center Right',
+                    'bottom_left'   => 'Bottom Left',
+                    'bottom_middle' => 'Bottom Middle',
+                    'bottom_right'  => 'Bottom Right',
+                ),
+                'value'             => 'center_middle'
+			),
+            'image' => array(
+                'type'              => 'image',
+                'label'             => esc_html__( 'Background Image', 'peenapo-layouts-txd' ),
+            ),
+            'url' => array(
+				'label'              => esc_html__( 'Link', 'peenapo-layouts-txd' ),
+				'type'               => 'textfield',
+				'placeholder'        => 'http://',
+			),
+            'color' => array(
+				'label'              => esc_html__( 'Text Color', 'peenapo-layouts-txd' ),
+				'type'               => 'colorpicker',
+                'width'              => 50
+			),
+            'sub_color' => array(
+				'label'              => esc_html__( 'Sub Text Color', 'peenapo-layouts-txd' ),
+				'type'               => 'colorpicker',
+                'width'              => 50
+			),
+            'switch_header' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Switch Header Color', 'peenapo-layouts-txd' ),
+				'description'       => esc_html__( 'Enable this options if you need to change the color of the header for specific slider. Note: the theme you are using should support this feature.', 'peenapo-layouts-txd' ),
+            ),
+            'switch_header_type' => array(
+                'type'              => 'select',
+				'label'             => esc_html__( 'Header Color Type', 'peenapo-layouts-txd' ),
+				'description'       => esc_html__( 'Select the type of header you want for this specific slide', 'peenapo-layouts-txd' ),
+				'options'           => array(
+                    'light'         => 'Light Color ( White )',
+                    'dark'          => 'Dark Color ( Black )',
+                ),
+                'value'             => 'light',
+                'depends'           => array( 'element' => 'switch_header', 'value' => '1' ),
+			),
+            'inline_class' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'CSS Classes', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_id' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'Element ID', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_css' => array(
+                'type'              => 'textarea',
+                'label'             => esc_html__( 'Inline CSS', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+        );
+
+    }
+
+    static function construct( $atts = array(), $content = null ) {
+
+        Playouts_Element_Carousel::$index += 1;
+
+    }
+
+    static function output( $atts = array(), $content = null ) {
+
+        extract( $assigned_atts = shortcode_atts( array(
+            'title'             => '',
+            'subtitle'          => '',
+            'position'          => 'center_middle',
+            'image'             => '',
+            'url'               => '',
+            'color'             => '',
+            'switch_header'     => false,
+            'switch_header_type' => 'light',
+            'sub_color'         => '',
+            'inline_class'      => '',
+            'inline_id'         => '',
+            'inline_css'        => '',
+        ), $atts ) );
+
+        $style = $class = $id = '';
+
+        $class .= ! empty( $inline_class ) ? ' ' . esc_attr( $inline_class ) : '';
+        $id .= ! empty( $inline_id ) ? ' id="' . esc_attr( $inline_id ) . '"' : '';
+        $style .= ! empty( $inline_css ) ? esc_attr( $inline_css ) : '';
+
+        if( $color ) { $style .= 'color:' . esc_attr( $color ) . ';'; }
+
+        ob_start();
+
+        if( $switch_header ) {
+            $class .= ' pl-call-header-' . esc_attr( $switch_header_type );
+        }
+
+        $title_font_size = Playouts_Element_Carousel::$title_font_size;
+        $sub_title_font_size = Playouts_Element_Carousel::$sub_title_font_size;
+
+        echo '<article class="pl-carousel-slide' . $class . '" style="' . ( Playouts_Element_Carousel::$index == 1 ? 'z-index:1;' : '' ) . $style . '"' . $id . '>';
+
+            if( $image ) {
+                echo '<figure class="featured-image" style="background-image:url(' . esc_url( $image ) . ');"></figure>';
+            }
+
+            switch( $position ) {
+                case 'top_left':        $style .= 'vertical-align:top;text-align:left;'; break;
+                case 'top_middle':      $style .= 'vertical-align:top;text-align:center;'; break;
+                case 'top_right':       $style .= 'vertical-align:top;text-align:right;'; break;
+                case 'center_left':     $style .= 'vertical-align:middle;text-align:left;'; break;
+                case 'center_middle':   $style .= 'vertical-align:middle;text-align:center;'; break;
+                case 'center_right':    $style .= 'vertical-align:middle;text-align:right;'; break;
+                case 'bottom_left':     $style .= 'vertical-align:bottom;text-align:left;'; break;
+                case 'bottom_middle':   $style .= 'vertical-align:bottom;text-align:center;'; break;
+                case 'bottom_right':    $style .= 'vertical-align:bottom;text-align:right;'; break;
+            }
+
+            echo '<div class="pl-carousel-text pl-table">';
+                echo '<div class="pl-cell" style="' . $style . '">';
+                    echo '<' . ( $url ? 'a href="' . esc_url( $url ) . '"' : 'div' ) . '>';
+                        echo '<p style="' . ( $sub_color ? 'color:' . esc_attr( $sub_color ) . ';' : '' ) . 'font-size:' . $sub_title_font_size . 'px;">' . esc_attr( $subtitle ) . '</p>';
+                        echo '<h1 style="font-size:' . $title_font_size . 'px;">' . esc_attr( $title ) . '</h1>';
+                    echo '</' . ( $url ? 'a' : 'div' ) . '>';
+                echo '</div>';
+            echo '</div>';
+
+        echo '</article>';
+
+        return ob_get_clean();
+
+    }
+}
+new Playouts_Element_Carousel_Item;

@@ -511,8 +511,8 @@ class Playouts_Element_Carousel_Item extends Playouts_Repeater_Item_Element {
             echo '<div class="pl-carousel-text pl-table">';
                 echo '<div class="pl-cell" style="' . $style . '">';
                     echo '<' . ( $url ? 'a href="' . esc_url( $url ) . '"' : 'div' ) . '>';
-                        echo '<p style="' . ( $sub_color ? 'color:' . esc_attr( $sub_color ) . ';' : '' ) . 'font-size:' . $sub_title_font_size . 'px;">' . esc_attr( $subtitle ) . '</p>';
-                        echo '<h1 style="font-size:' . $title_font_size . 'px;">' . esc_attr( $title ) . '</h1>';
+                        echo '<p class="pl-carousel-sub-title" style="' . ( $sub_color ? 'color:' . esc_attr( $sub_color ) . ';' : '' ) . 'font-size:' . $sub_title_font_size . 'px;">' . esc_attr( $subtitle ) . '</p>';
+                        echo '<h2 class="pl-carousel-title" style="font-size:' . $title_font_size . 'px;">' . esc_attr( $title ) . '</h2>';
                     echo '</' . ( $url ? 'a' : 'div' ) . '>';
                 echo '</div>';
             echo '</div>';

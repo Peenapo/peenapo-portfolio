@@ -60,11 +60,12 @@
 .pl-carousel-slide .featured-image .pl-image-wrap {position:absolute;}
 .pl-carousel-slide .featured-image img {position:absolute;top:0;left:0;right:0;bottom:0;max-width:none;vertical-align:bottom;}
 
-.pl-carousel-text {position:relative;padding:240px;z-index:3;opacity:1;pointer-events:none;
+.pl-carousel-text {position:relative;padding:120px 240px;z-index:3;opacity:1;pointer-events:none;
     transition:all .5s;-webkit-transition:all .5s;
 }
 .pl-hide-title .pl-carousel-text {opacity:0;}
-.pl-carousel-text h1 {display:inline-block;margin:0;max-width:700px;color:inherit;font-size:60px;}
+.pl-carousel-text .pl-carousel-title {display:inline-block;margin:0;max-width:700px;line-height:135%;color:inherit;font-size:60px;}
+.pl-carousel-text .pl-carousel-sub-title {margin-bottom:0.4em;}
 .pl-carousel-text > .pl-cell {color:#111;}
 .pl-carousel-text p {margin:0;font-size:15px;color:inherit;line-height:125%;}
 .pl-carousel-text a {display:inline-block;color:inherit;pointer-events:all;}

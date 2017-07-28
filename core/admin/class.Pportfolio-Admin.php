@@ -16,7 +16,7 @@ class Pportfolio_Admin {
 	static function init() {
 
         # add support settings tab
-        add_filter( 'bwg_support', array( 'Pportfolio_Admin', 'add_support_settings_tab_portfolio' ) );
+        add_filter( 'plg_support', array( 'Pportfolio_Admin', 'add_support_settings_tab_portfolio' ) );
         add_action( 'playouts_support_portfolio', array( 'Pportfolio_Admin', 'add_support_settings_tab_content_portfolio' ) );
 
         # enqueue scripts

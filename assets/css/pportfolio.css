@@ -78,4 +78,4 @@
 .pl-carousel-nav:hover i {opacity:0.6;left:-7px;}
 .pl-carousel-nav.pl-carousel-nav-next:hover i {left:7px;}
     .pl-is-header-light .pl-carousel-nav {color:#fff;}
-    .pl-is-header-dark .pl-carousel-nav {color:#fff;}
+    .pl-is-header-dark .pl-carousel-nav {color:#111;}

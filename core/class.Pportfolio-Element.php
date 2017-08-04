@@ -269,7 +269,7 @@ class Playouts_Element_Carousel extends Playouts_Repeater_Element {
                 'type'              => 'number_slider',
                 'label'             => esc_html__( 'Title Font Size', 'peenapo-portfolio-txd' ),
                 'append_after'      => 'pixels',
-                'min'               => 40,
+                'min'               => 20,
                 'max'               => 150,
                 'step'              => 1,
                 'value'             => 60,

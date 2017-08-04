@@ -187,7 +187,10 @@ var Pportfolio = {
         slide: function( $carousel, currentIndex, nextIndex, dir ) {
 
             $carousel.addClass('pl-animate pl-hide-title');
-            $body.removeClass( 'pl-is-header-light pl-is-header-dark' );
+
+            if( $carousel.find('.pl-call-header-light, .pl-call-header-dark').length ) {
+                $body.removeClass( 'pl-is-header-light pl-is-header-dark' );
+            }
 
             setTimeout(function() {
                 $carousel.removeClass('pl-hide-title');

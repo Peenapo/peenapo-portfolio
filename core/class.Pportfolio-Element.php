@@ -255,7 +255,7 @@ class Playouts_Element_Carousel extends Playouts_Repeater_Element {
 
         $this->module = 'bw_carousel';
         $this->module_item = 'bw_carousel_item';
-        $this->name = esc_html__( 'Carousel', 'peenapo-layouts-txd' );
+        $this->name = esc_html__( 'Portfolio Carousel', 'peenapo-layouts-txd' );
         $this->view = 'repeater';
         $this->category = array( 'portfolio' => __( 'Portfolio', 'peenapo-portfolio-txd' ) );
         $this->module_color = '#e1c140';
@@ -298,6 +298,10 @@ class Playouts_Element_Carousel extends Playouts_Repeater_Element {
                 'value'             => 4000,
                 'depends'           => array( 'element' => 'autoplay', 'value' => '1' ),
             ),
+            'enable_down' => array(
+                'type'              => 'true_false',
+                'label'             => esc_html__( 'Enable Scroll Down Button', 'peenapo-layouts-txd' ),
+			),
             'inline_class' => array(
                 'type'              => 'textfield',
                 'label'             => esc_html__( 'CSS Classes', 'peenapo-layouts-txd' ),
@@ -331,6 +335,7 @@ class Playouts_Element_Carousel extends Playouts_Repeater_Element {
             'sub_title_font_size' => 17,
             'autoplay'          => false,
             'autoplay_interval' => 4000,
+            'enable_down'       => false,
             'inline_class'      => '',
             'inline_id'         => '',
             'inline_css'        => '',
@@ -352,6 +357,7 @@ class Playouts_Element_Carousel extends Playouts_Repeater_Element {
             echo $content;
             echo '<a href="#" class="pl-carousel-nav pl-carousel-nav-prev"><i class="pl-7s-angle-left"></i></a>';
             echo '<a href="#" class="pl-carousel-nav pl-carousel-nav-next"><i class="pl-7s-angle-right"></i></a>';
+            echo ( $enable_down ? '<span class="bw-carousel-down"></span>' : '' );
         echo '</div>';
 
         return ob_get_clean();
@@ -375,7 +381,11 @@ class Playouts_Element_Carousel_Item extends Playouts_Repeater_Item_Element {
 				'label'              => esc_html__( 'Title', 'peenapo-layouts-txd' ),
 				'value'              => esc_html__( 'Slide title', 'peenapo-layouts-txd' ),
 			),
-            'subtitle' => array(
+            'top_title' => array(
+                'type'               => 'textfield',
+				'label'              => esc_html__( 'Top-Title', 'peenapo-layouts-txd' ),
+			),
+            'sub_title' => array(
                 'type'               => 'textfield',
 				'label'              => esc_html__( 'Sub-Title', 'peenapo-layouts-txd' ),
 			),
@@ -460,7 +470,8 @@ class Playouts_Element_Carousel_Item extends Playouts_Repeater_Item_Element {
 
         extract( $assigned_atts = shortcode_atts( array(
             'title'             => '',
-            'subtitle'          => '',
+            'top_title'         => '',
+            'sub_title'         => '',
             'position'          => 'center_middle',
             'image'             => '',
             'url'               => '',
@@ -511,8 +522,9 @@ class Playouts_Element_Carousel_Item extends Playouts_Repeater_Item_Element {
             echo '<div class="pl-carousel-text pl-table">';
                 echo '<div class="pl-cell" style="' . $style . '">';
                     echo '<' . ( $url ? 'a href="' . esc_url( $url ) . '"' : 'div' ) . '>';
-                        echo '<p class="pl-carousel-sub-title" style="' . ( $sub_color ? 'color:' . esc_attr( $sub_color ) . ';' : '' ) . 'font-size:' . $sub_title_font_size . 'px;">' . esc_attr( $subtitle ) . '</p>';
+                        echo '<p class="pl-carousel-top-title" style="' . ( $sub_color ? 'color:' . esc_attr( $sub_color ) . ';' : '' ) . 'font-size:' . $sub_title_font_size . 'px;">' . esc_attr( $top_title ) . '</p>';
                         echo '<h2 class="pl-carousel-title" style="font-size:' . $title_font_size . 'px;">' . esc_attr( $title ) . '</h2>';
+                        echo ( $sub_title ? '<p class="pl-carousel-sub-title">' . wp_kses_data( $sub_title ) . '</p>' : '' );
                     echo '</' . ( $url ? 'a' : 'div' ) . '>';
                 echo '</div>';
             echo '</div>';

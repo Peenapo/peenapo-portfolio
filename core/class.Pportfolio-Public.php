@@ -56,7 +56,7 @@ class Pportfolio_Public {
 
             # dynamic enqueue
             if( in_array( 'bw_portfolio_grid', Playouts_Public::$parsed_ids ) ) {
-                wp_enqueue_script( 'pportfolio-isotope', PPORTFOLIO_URL . 'assets/js/vendor/isotope.pkgd.min.js', array( 'jquery', 'playouts-front-plugins' ), '1.0', true );
+                wp_enqueue_script( 'bw-isotope', PPORTFOLIO_URL . 'assets/js/vendor/isotope.pkgd.min.js', array( 'jquery', 'playouts-front-plugins' ), '1.0', true );
             }
 
             wp_enqueue_script( 'pportfolio-main', PPORTFOLIO_URL . 'assets/js/pportfolio.js', array( 'jquery', 'playouts-front-plugins' ), '1.0', true );

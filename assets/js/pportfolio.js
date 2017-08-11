@@ -152,7 +152,14 @@ var Pportfolio = {
 
             var $firstSlide = $('.pl-carousel-slide:eq(0)');
 
-            $('.pl-carousel').on('click', '.pl-carousel-nav', Pportfolio.carousel.click)
+            $('.pl-carousel').on('click', '.pl-carousel-nav', Pportfolio.carousel.click);
+            $('.bw-carousel-down').on('click', Pportfolio.carousel.down);
+
+        },
+
+        down: function(e) {
+
+            TweenLite.to( window, .6, { scrollTo: $(this).closest('.pl-row-outer').next('.pl-row-outer')[0], ease: Power3.easeInOut } );
 
         },
 

@@ -172,7 +172,7 @@ class Playouts_Element_Portfolio_Grid extends Playouts_Element {
         if ( $_query->have_posts() ) {
 
             $options = Playouts_Public::$options;
-            $thumb_size = ( isset( $options['portfolio_thumb_grid'] ) and ! empty( $options['portfolio_thumb_grid'] ) ) ? esc_attr( $options['portfolio_thumb_grid'] ) : 'large';
+            //$thumb_size = ( isset( $options['portfolio_thumb_grid'] ) and ! empty( $options['portfolio_thumb_grid'] ) ) ? esc_attr( $options['portfolio_thumb_grid'] ) : 'large';
             $_style = '';
             if( $gaps ) {
                 $_style .= 'width:calc(100% + ' . (int) $gaps . 'px);';
@@ -258,7 +258,7 @@ class Playouts_Element_Carousel extends Playouts_Repeater_Element {
         $this->name = esc_html__( 'Portfolio Carousel', 'peenapo-layouts-txd' );
         $this->view = 'repeater';
         $this->category = array( 'portfolio' => __( 'Portfolio', 'peenapo-portfolio-txd' ) );
-        $this->module_color = '#e1c140';
+        $this->module_color = '#4d49ee';
         $this->params = array(
             'items' => array(
                 'type'               => 'repeater',
@@ -536,3 +536,154 @@ class Playouts_Element_Carousel_Item extends Playouts_Repeater_Item_Element {
     }
 }
 new Playouts_Element_Carousel_Item;
+
+/*class Playouts_Element_Rail_Slider extends Playouts_Repeater_Element {
+
+    static $index = 0;
+
+    function init() {
+
+        $this->module = 'bw_rail_slider';
+        $this->module_item = 'bw_rail_slider_item';
+        $this->name = esc_html__( 'Rail Slider', 'peenapo-layouts-txd' );
+        $this->view = 'repeater';
+        $this->category = array( 'portfolio' => __( 'Portfolio', 'peenapo-portfolio-txd' ) );
+        $this->module_color = '#4d49ee';
+        $this->params = array(
+            'items' => array(
+                'type'               => 'repeater',
+                'label'              => esc_html__( 'Rail Slider Items', 'peenapo-layouts-txd' ),
+                'description'        => esc_html__( 'You can add as many items as you need, just click the plus icon.', 'peenapo-layouts-txd' ),
+            ),
+            'inline_class' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'CSS Classes', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_id' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'Element ID', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_css' => array(
+                'type'              => 'textarea',
+                'label'             => esc_html__( 'Inline CSS', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+        );
+
+    }
+
+    static function construct( $atts = array(), $content = null ) {}
+
+    static function output( $atts = array(), $content = null ) {
+
+        extract( $assigned_atts = shortcode_atts( array(
+            'inline_class'      => '',
+            'inline_id'         => '',
+            'inline_css'        => '',
+        ), $atts ) );
+
+        $style = $class = $id = $attr = '';
+
+        $class .= ! empty( $inline_class ) ? ' ' . esc_attr( $inline_class ) : '';
+        $id .= ! empty( $inline_id ) ? ' id="' . esc_attr( $inline_id ) . '"' : '';
+        $style .= ! empty( $inline_css ) ? esc_attr( $inline_css ) : '';
+
+        self::$index = 0;
+
+        ob_start();
+
+        echo '<div class="pl-rail-slider' . $class . '" style="' . $style . '"' . $id . $attr . '>';
+            echo '<div class="pl-rail-slider-inner pl-no-select">';
+                echo $content;
+            echo '</div>';
+        echo '</div>';
+
+        return ob_get_clean();
+
+    }
+}
+new Playouts_Element_Rail_Slider;
+
+class Playouts_Element_Rail_Slider_Item extends Playouts_Repeater_Item_Element {
+
+    function init() {
+
+        $this->module = 'bw_rail_slider_item';
+        $this->module_parent = 'bw_rail_slider';
+        $this->name = esc_html__( 'Rail Slider Item', 'peenapo-layouts-txd' );
+        $this->view = 'repeater_item';
+
+        $this->params = array(
+            'image' => array(
+                'type'              => 'image',
+                'label'             => esc_html__( 'Background Image', 'peenapo-layouts-txd' ),
+            ),
+            'title' => array(
+                'type'               => 'textfield',
+				'label'              => esc_html__( 'Rail slider title', 'peenapo-layouts-txd' ),
+				'value'              => esc_html__( 'Slide title', 'peenapo-layouts-txd' ),
+			),
+            'inline_class' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'CSS Classes', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_id' => array(
+                'type'              => 'textfield',
+                'label'             => esc_html__( 'Element ID', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+            'inline_css' => array(
+                'type'              => 'textarea',
+                'label'             => esc_html__( 'Inline CSS', 'peenapo-layouts-txd' ),
+                'tab'               => array( 'inline' => esc_html__( 'Inline', 'peenapo-layouts-txd' ) ),
+            ),
+        );
+
+    }
+
+    static function construct( $atts = array(), $content = null ) {
+
+        Playouts_Element_Carousel::$index += 1;
+
+    }
+
+    static function output( $atts = array(), $content = null ) {
+
+        extract( $assigned_atts = shortcode_atts( array(
+            'title'             => '',
+            'image'             => '',
+            'inline_class'      => '',
+            'inline_id'         => '',
+            'inline_css'        => '',
+        ), $atts ) );
+
+        $style = $class = $id = $attr = '';
+
+        $class .= ! empty( $inline_class ) ? ' ' . esc_attr( $inline_class ) : '';
+        $id .= ! empty( $inline_id ) ? ' id="' . esc_attr( $inline_id ) . '"' : '';
+        $style .= ! empty( $inline_css ) ? esc_attr( $inline_css ) : '';
+
+        $attr .= ' data-item="' . (int) Playouts_Element_Carousel::$index . '"';
+
+        $image_id = Playouts_Functions::get_image_id_from_url( $image );
+        $_image = wp_get_attachment_image_src( $image_id, 'large' );
+        $attr .= ' data-image="' . esc_url( $_image[0] ) . '"';
+        $attr .= ' data-image-width="' . (int) $_image[1] . '"';
+        $attr .= ' data-image-height="' . (int) $_image[2] . '"';
+
+        ob_start();
+
+        if( ! $image ) { return; }
+
+        echo '<div class="pl-rail-item' . $class . '" style="' . $style . '"' . $id . $attr . '>';
+            echo '<figure class="pl-rail-image"><span></span></figure>';
+        echo '</div>';
+
+        return ob_get_clean();
+
+    }
+}
+new Playouts_Element_Rail_Slider_Item;*/

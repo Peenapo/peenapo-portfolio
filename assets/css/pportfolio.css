@@ -89,3 +89,12 @@
 .bw-carousel-down:hover {transform:scale(1.1);-webkit-transform:scale(1.1);}
     .pl-is-header-dark .bw-carousel-down {border-color:rgba(0,0,0,0.8);}
     .pl-is-header-dark .bw-carousel-down:after {border-color:rgba(0,0,0,0.8);}
+
+/* rail slider */
+.pl-rail-slider {width:100%;height:50vh;overflow:hidden;}
+.pl-rail-slider-inner {display:inline-block;height:100%;white-space:nowrap;position:relative;}
+.pl-rail-slider-holder {height:100%;position:relative;}
+.pl-rail-item {display:inline-block;height:100%;margin:0 30px;vertical-align:top;position:relative;}
+.pl-rail-slider .pl-rail-image {height:100%;position:relative;}
+.pl-rail-slider .pl-rail-image img {height:100%;width:auto;vertical-align:top;}
+.pl-rail-slider .pl-rail-image span {position:absolute;top:0;left:0;right:0;bottom:0;background-color:#f1f1f1;}
